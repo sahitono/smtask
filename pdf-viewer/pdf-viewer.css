@@ -1,0 +1,46 @@
+#pdf-viewer-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 30%;
+  height: 80%;
+  background-color: #443c69;
+  border-radius: 7px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  background: #e0e0e0;
+  border: 1px solid gray;
+  box-shadow: 16px 16px 42px #898989, -16px -16px 42px #ffffff;
+
+  z-index: 100;
+  transition: opacity 0.3s linear;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#pdf-viewer-modal.visible {
+  height: 80%;
+  opacity: 100%;
+  visibility: visible;
+}
+
+.pdf-header {
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#pdf-content {
+  height: calc(100% - 3rem);
+  width: 100%;
+  overflow: scroll;
+}
+
+#pdf-content embed {
+  width: 100%;
+  height: 100%;
+}

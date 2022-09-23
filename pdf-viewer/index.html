@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <title>Document</title>
+
+    <style>
+        #pdf-viewer-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 30%;
+            height: 80%;
+            background-color: #443c69;
+            border-radius: 7px;
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+            background: #e0e0e0;
+            border: 1px solid gray;
+            box-shadow: 16px 16px 42px #898989,
+                -16px -16px 42px #ffffff;
+
+            z-index: 100;
+            transition: opacity 0.3s linear;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #pdf-viewer-modal.visible {
+            height: 80%;
+            opacity: 100%;
+            visibility: visible;
+
+        }
+
+        .pdf-header {
+            padding: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #pdf-content {
+            height: calc(100% - 3rem);
+            width: 100%;
+            overflow: scroll
+        }
+
+        #pdf-content embed {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="pdf-viewer-modal">
+        <div class="pdf-header">
+            <div id="pdf-title">PDF Name</div>
+            <div>
+                <button id="close-pdf" type="button" class="btn btn-secondary btn-sm">Close</button>
+
+            </div>
+
+        </div>
+
+        <div id="pdf-content">
+            <embed type="application/pdf" title="PDF Demo" src="https://viewerjs.org/demodoc.pdf"></embed>
+        </div>
+    </div>
+
+    <div style="margin-top: 1rem; margin-left: 1rem">
+        <button id="example-open" type="button" class="btn btn-primary">Show PDF</button>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.min.js"
+        integrity="sha256-H8KU7v2mAuWRoGwdWvNhyuI3VrWjNPwkIdX5rMzgOOU=" crossorigin="anonymous"></script>
+    <script src="/pdf-viewer.js">
+
+    </script>
+
+    <script src="/index.js">
+
+    </script>
+</body>
+
+</html>
