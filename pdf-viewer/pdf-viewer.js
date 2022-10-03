@@ -63,9 +63,24 @@ function makeItDraggable(divId) {
 makeItDraggable("pdf-viewer-modal");
 
 /**
+ *
+ * @param {string} url - iserver url
+ * @returns
+ */
+async function fetchPdf(url) {
+  const res = await fetch(url);
+
+  const data = await res.arrayBuffer();
+
+  return `data:application/pdf;base64, ${btoa(
+    String.fromCharCode(...new Uint8Array(data))
+  )}`;
+}
+
+/**
  * @param {string} url - pdf link url
  */
-function showPdf(url) {
+async function showPdf(url) {
   const closeBtn = document.getElementById("close-pdf");
   closeBtn.replaceWith(closeBtn.cloneNode(true));
 
@@ -73,12 +88,18 @@ function showPdf(url) {
   content.removeChild(content.firstChild);
 
   const pdfUrl = new URL(url).pathname.split("/");
-  const pdfTItle = pdfUrl[pdfUrl.length - 1];
+  let pdfTItle = pdfUrl[pdfUrl.length - 1];
+
+  if (!pdfTItle.includes(".pdf")) {
+    pdfTItle = "Attachment";
+  }
 
   const embed = document.createElement("embed");
   embed.setAttribute("type", "application/pdf");
   embed.setAttribute("title", pdfTItle);
-  embed.setAttribute("src", url);
+
+  const data64 = await fetchPdf(url);
+  embed.setAttribute("src", data64);
 
   content.appendChild(embed);
 

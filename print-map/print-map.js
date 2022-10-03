@@ -12,6 +12,12 @@ const symbolSvg = {
     `<svg viewBox="0 0 130 100" width="20px"xmlns="http://www.w3.org/2000/svg">
       <circle cx="65" cy="50" r="40" stroke="black" stroke-width="3" fill="${color}" />
     </svg>`,
+
+  color: (
+    color
+  ) => `<svg viewBox="0 0 130 100" width="20px" xmlns="http://www.w3.org/2000/svg">
+      <rect class="symbol" width="130" height="100" fill="${color}" />
+    </svg>`,
 };
 
 let mapPrint;
@@ -21,9 +27,9 @@ let mapPrint;
  * @param {string} title - map title
  * @param {ol.Map} mapVar - the created openlayers Map variable
  * @param {Array<{name: string, layer: ol.layer.Vector, type: string, color: string}>} vectorLayers - list of all vector layer grouped by each category, define type = polygon, line, point
- * @param {Array<{name: string, layer: ol.layer.Tile}>} tileImageLayers - list of all tile layer, if empty will use osm as basemap
+ * @param {Array<{name: string, layer: ol.layer.Tile}>} imageLayers - list of all tile layer, if empty will use osm as basemap
  */
-function printMap(title, mapVar, vectorLayers, tileImageLayers = []) {
+function printMap(title, mapVar, vectorLayers, imageLayers = []) {
   Notiflix.Loading.standard("Preparing maps...");
 
   if (vectorLayers.length === 0) {
@@ -47,14 +53,14 @@ function printMap(title, mapVar, vectorLayers, tileImageLayers = []) {
   map.updateSize();
 
   // add tileimagelayer
-  if (tileImageLayers.length === 0) {
+  if (imageLayers.length === 0) {
     const osmLayer = new ol.layer.Tile({
       source: new ol.source.OSM(),
     });
 
     map.addLayer(osmLayer);
   } else {
-    for (const { layer } of tileImageLayers) {
+    for (const { layer } of imageLayers) {
       map.addLayer(layer);
     }
   }
@@ -69,7 +75,10 @@ function printMap(title, mapVar, vectorLayers, tileImageLayers = []) {
   for (const { name, layer, type, color } of vectorLayers) {
     map.addLayer(layer);
 
-    let symbol = symbolSvg[type](color);
+    let symbol = symbolSvg["color"](color);
+    if (type != undefined) {
+      symbol = symbolSvg[type](color);
+    }
 
     const symbolDiv = document.createElement("div");
     symbolDiv.style.marginRight = "0.3rem";
